@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoParts Pro - Premium Automotive Parts & Accessories</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,sans-serif}
+body{background:#f4f6f8;color:#222;line-height:1.5}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+a{text-decoration:none;color:inherit;cursor:pointer}
+img{max-width:100%;display:block}
+button{cursor:pointer;font-family:inherit}
+.hidden{display:none!important}
+
+/* Header */
+.header{background:#1a2332;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);position:sticky;top:0;z-index:100}
+.header-inner{display:flex;align-items:center;gap:20px;padding:15px 20px;flex-wrap:wrap}
+.logo{font-size:22px;font-weight:bold;color:#fff}
+.logo span{color:#f39c12}
+.search-bar{flex:1;display:flex;min-width:250px}
+.search-bar input{flex:1;padding:10px 15px;border:none;border-radius:4px 0 0 4px;font-size:14px}
+.search-bar button{background:#f39c12;border:none;padding:0 20px;border-radius:0 4px 4px 0;color:#fff;font-size:16px}
+.nav{display:flex;gap:20px;align-items:center}
+.nav a{color:#fff;font-weight:500}
+.nav a:hover{color:#f39c12}
+.cart-link{position:relative;background:#f39c12;padding:8px 16px;border-radius:4px}
+.cart-count{background:#e74c3c;border-radius:50%;padding:2px 8px;font-size:12px;margin-left:5px}
+.category-bar{display:flex;gap:25px;padding:10px 20px;overflow-x:auto;background:#0f172a}
+.category-bar a{color:#ddd;font-size:14px;white-space:nowrap}
+.category-bar a:hover{color:#f39c12}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a2332 0%,#2c3e50 100%);color:#fff;padding:60px 0;text-align:center}
+.hero h1{font-size:42px;margin-bottom:10px}
+.hero p{font-size:18px;margin-bottom:30px;opacity:0.9}
+.vehicle-finder{background:rgba(255,255,255,0.1);padding:25px;border-radius:8px;max-width:700px;margin:0 auto}
+.vehicle-finder h3{margin-bottom:15px}
+.finder-grid{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px}
+.finder-grid select,.finder-grid button{padding:12px;border:none;border-radius:4px;font-size:14px}
+.finder-grid button{background:#f39c12;color:#fff;font-weight:bold}
+
+/* Sections */
+.section{padding:40px 0}
+.section h2{font-size:28px;margin-bottom:20px;color:#1a2332}
+
+/* Product Grid */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.product-card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:transform 0.2s,box-shadow 0.2s;cursor:pointer}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(0,0,0,0.15)}
+.product-image{width:100%;height:180px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:60px}
+.product-info{padding:15px}
+.product-title{font-size:15px;font-weight:600;margin-bottom:6px;min-height:42px}
+.product-brand{color:#666;font-size:13px;margin-bottom:8px}
+.product-rating{color:#f39c12;margin-bottom:8px;font-size:13px}
+.product-price{font-size:20px;font-weight:bold;color:#e74c3c;margin-bottom:10px}
+.product-price .old{text-decoration:line-through;color:#999;font-size:14px;font-weight:normal;margin-left:6px}
+.btn-primary{background:#f39c12;color:#fff;border:none;padding:10px 20px;border-radius:4px;font-weight:600;width:100%;font-size:14px}
+.btn-primary:hover{background:#e67e22}
+.btn-primary:disabled{background:#bbb;cursor:not-allowed}
+.btn-secondary{background:#ecf0f1;color:#333;border:none;padding:10px 20px;border-radius:4px;font-weight:600;margin-top:5px;width:100%}
+.btn-large{padding:14px 30px;font-size:16px}
+
+/* Category Grid */
+.category-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px}
+.cat-card{background:#fff;padding:30px 15px;border-radius:8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.08);transition:all 0.2s;font-size:40px}
+.cat-card:hover{transform:translateY(-3px);background:#f39c12;color:#fff}
+.cat-card h3{font-size:16px;margin-top:10px}
+
+/* Promo */
+.promo-banner{background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;padding:50px 0;text-align:center;margin:40px 0}
+.promo-banner h2{font-size:32px;margin-bottom:10px}
+.promo-banner .btn-primary{display:inline-block;width:auto;margin-top:15px;background:#fff;color:#e74c3c}
+
+/* Shop Layout */
+.shop-layout{display:grid;grid-template-columns:260px 1fr;gap:25px;padding:25px 20px}
+.sidebar{background:#fff;padding:20px;border-radius:8px;height:fit-content;box-shadow:0 2px 6px rgba(0,0,0,0.05)}
+.sidebar h3{margin-bottom:15px;padding-bottom:10px;border-bottom:2px solid #f39c12}
+.filter-group{margin-bottom:20px}
+.filter-group h4{font-size:14px;margin-bottom:8px;color:#555}
+.filter-group label{display:block;margin-bottom:5px;font-size:13px;cursor:pointer}
+.filter-group input[type=number]{width:80px;padding:5px;margin-left:5px;border:1px solid #ddd;border-radius:3px}
+.shop-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.shop-header select{padding:8px;border:1px solid #ddd;border-radius:4px}
+
+/* Product Detail */
+.pd-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:40px;background:#fff;border-radius:8px;padding:30px;margin-top:20px}
+.pd-image{background:#f0f0f0;height:400px;display:flex;align-items:center;justify-content:center;font-size:150px;border-radius:8px}
+.pd-title{font-size:28px;margin-bottom:10px}
+.pd-brand{color:#666;margin-bottom:10px}
+.pd-price{font-size:32px;color:#e74c3c;font-weight:bold;margin:15px 0}
+.pd-specs{margin:20px 0}
+.pd-specs table{width:100%;border-collapse:collapse}
+.pd-specs td{padding:8px;border-bottom:1px solid #eee;font-size:14px}
+.pd-specs td:first-child{font-weight:600;width:40%;color:#555}
+.availability{padding:8px 12px;border-radius:4px;display:inline-block;font-size:13px;margin-bottom:15px}
+.in-stock{background:#d4edda;color:#155724}
+.low-stock{background:#fff3cd;color:#856404}
+.out-stock{background:#f8d7da;color:#721c24}
+.qty-row{display:flex;gap:10px;margin:15px 0;align-items:center}
+.qty-row input{width:70px;padding:8px;border:1px solid #ddd;border-radius:4px;text-align:center}
+
+/* Reviews */
+.review{background:#fff;padding:15px;border-radius:6px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.review-header{display:flex;justify-content:space-between;margin-bottom:8px}
+.review-author{font-weight:600}
+
+/* Cart */
+.cart-layout{display:grid;grid-template-columns:2fr 1fr;gap:25px;padding:20px 0}
+.cart-items{background:#fff;border-radius:8px;padding:20px}
+.cart-item{display:grid;grid-template-columns:80px 1fr auto auto;gap:15px;padding:15px 0;border-bottom:1px solid #eee;align-items:center}
+.cart-item-img{width:80px;height:80px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:40px;border-radius:4px}
+.cart-item-info h4{margin-bottom:5px}
+.cart-item-info p{color:#666;font-size:13px}
+.cart-summary,.order-summary{background:#fff;border-radius:8px;padding:20px;height:fit-content;box-shadow:0 2px 6px rgba(0,0,0,0.05)}
+.summary-row{display:flex;justify-content:space-between;padding:8px 0;font-size:15px}
+.summary-row.total{border-top:2px solid #eee;margin-top:10px;padding-top:15px;font-size:20px;font-weight:bold;color:#e74c3c}
+
+/* Checkout */
+.checkout-layout{display:grid;grid-template-columns:2fr 1fr;gap:25px;padding:20px 0}
+.checkout-form{background:#fff;padding:25px;border-radius:8px}
+.checkout-form h2{font-size:20px;margin:20px 0 15px;padding-bottom:8px;border-bottom:2px solid #f39c12}
+.checkout-form h2:first-child{margin-top:0}
+.checkout-form input{width:100%;padding:10px;margin-bottom:10px;border:1px solid #ddd;border-radius:4px;font-size:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.payment-box{background:#f8f9fa;padding:15px;border-radius:6px;border:1px solid #e0e0e0}
+.secure-note{font-size:12px;color:#666;margin-top:8px}
+
+/* Account */
+.account-tabs{display:flex;gap:10px;border-bottom:2px solid #eee;margin-bottom:20px;flex-wrap:wrap}
+.account-tabs button{background:none;border:none;padding:12px 20px;font-size:15px;color:#666}
+.account-tabs button.active{color:#f39c12;border-bottom:2px solid #f39c12;font-weight:600}
+.order-card{background:#fff;padding:20px;margin-bottom:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.05)}
+.order-header{display:flex;justify-content:space-between;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #eee;flex-wrap:wrap;gap:5px}
+.status{padding:4px 10px;border-radius:12px;font-size:12px;font-weight:600;display:inline-block}
+.status-delivered{background:#d4edda;color:#155724}
+.status-shipped{background:#cce5ff;color:#004085}
+.status-processing{background:#fff3cd;color:#856404}
+
+/* Admin */
+.admin-layout{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:20px 0}
+.admin-sidebar{background:#fff;padding:15px;border-radius:8px;height:fit-content}
+.admin-sidebar button{display:block;width:100%;text-align:left;padding:12px;border:none;background:none;border-radius:4px;margin-bottom:5px;font-size:14px}
+.admin-sidebar button.active,.admin-sidebar button:hover{background:#f39c12;color:#fff}
+.admin-main{background:#fff;padding:25px;border-radius:8px;min-height:600px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px;margin-bottom:25px}
+.stat-card{padding:20px;border-radius:8px;color:#fff}
+.stat-card:nth-child(1){background:linear-gradient(135deg,#3498db,#2980b9)}
+.stat-card:nth-child(2){background:linear-gradient(135deg,#2ecc71,#27ae60)}
+.stat-card:nth-child(3){background:linear-gradient(135deg,#e74c3c,#c0392b)}
+.stat-card:nth-child(4){background:linear-gradient(135deg,#f39c12,#d68910)}
+.stat-card h3{font-size:14px;opacity:0.9}
+.stat-card .val{font-size:28px;font-weight:bold;margin-top:5px}
+.admin-table{width:100%;border-collapse:collapse;margin-top:15px}
+.admin-table th,.admin-table td{padding:10px;text-align:left;border-bottom:1px solid #eee;font-size:14px}
+.admin-table th{background:#f8f9fa;font-weight:600}
+.admin-table button{padding:5px 10px;border:none;border-radius:4px;margin-right:5px;font-size:12px}
+.edit-btn{background:#3498db;color:#fff}
+.delete-btn{background:#e74c3c;color:#fff}
+
+/* Footer */
+.footer{background:#1a2332;color:#ddd;padding:40px 0 0;margin-top:60px}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:25px;padding-bottom:30px}
+.footer-grid h4{color:#f39c12;margin-bottom:15px}
+.footer-grid a{display:block;color:#ddd;padding:4px 0;font-size:14px}
+.footer-grid a:hover{color:#f39c12}
+.footer-bottom{text-align:center;padding:15px;border-top:1px solid #2c3e50;font-size:13px}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;right:20px;background:#27ae60;color:#fff;padding:12px 24px;border-radius:6px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.2);animation:slideIn 0.3s}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* Breadcrumb */
+.breadcrumb{padding:15px 0;color:#666;font-size:13px}
+.breadcrumb a{color:#f39c12}
+
+@media (max-width:768px){
+  .shop-layout,.cart-layout,.checkout-layout,.admin-layout,.pd-wrapper{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+  .finder-grid{grid-template-columns:1fr 1fr}
+  .header-inner{gap:10px}
+  .search-bar{order:3;width:100%}
+  .nav{font-size:13px;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="logo" onclick="showPage('home')">🔧 AutoParts<span>Pro</span></a>
+    <div class="search-bar">
+      <input type="text" id="globalSearch" placeholder="Search parts by name, SKU, or vehicle..." onkeydown="if(event.key==='Enter')performSearch()">
+      <button onclick="performSearch()">🔍</button>
+    </div>
+    <nav class="nav">
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('shop')">Shop</a>
+      <a onclick="showPage('account')">Account</a>
+      <a onclick="showPage('admin')">Admin</a>
+      <a class="cart-link" onclick="showPage('cart')">Cart <span id="cartCount" class="cart-count">0</span></a>
+    </nav>
+  </div>
+  <div class="category-bar">
+    <div class="container" style="display:flex;gap:25px">
+      <a onclick="filterCategory('brakes')">Brakes</a>
+      <a onclick="filterCategory('batteries')">Batteries</a>
+      <a onclick="filterCategory('tires')">Tires</a>
+      <a onclick="filterCategory('engine')">Engine</a>
+      <a onclick="filterCategory('lights')">Lights</a>
+      <a onclick="filterCategory('electronics')">Electronics</a>
+      <a onclick="filterCategory('tools')">Tools</a>
+      <a onclick="filterCategory('accessories')">Accessories</a>
+    </div>
+  </div>
+</header>
+
+<main id="mainContent"></main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><h4>AutoParts Pro</h4><p>Your trusted source for quality automotive parts since 2010.</p></div>
+    <div><h4>Customer Service</h4><a>Contact Us</a><a>Shipping</a><a>Returns</a></div>
+    <div><h4>Company</h4><a>About</a><a>Careers</a><a>Affiliates</a></div>
+    <div><h4>Connect</h4><a>Facebook</a><a>Twitter</a><a>Instagram</a></div>
+  </div>
+  <div class="footer-bottom">© 2025 AutoParts Pro. All rights reserved.</div>
+</footer>
+
+<script>
+/* ============ DATA ============ */
+const PRODUCTS=[
+{id:1,name:"Premium Ceramic Brake Pads",category:"brakes",brand:"Brembo",price:89.99,oldPrice:119.99,rating:4.7,reviews:234,stock:45,image:"🛑",sku:"BP-4501",isNew:false,sale:true,description:"High-performance ceramic brake pads offering superior stopping power and reduced brake dust.",specs:{Material:"Ceramic",Position:"Front",Warranty:"3 Years","Fits":"Honda Civic 2015-2023",Weight:"4.2 lbs"}},
+{id:2,name:"AGM Car Battery 12V 75Ah",category:"batteries",brand:"Optima",price:229.99,rating:4.8,reviews:412,stock:12,image:"🔋",sku:"BAT-7501",description:"Maintenance-free AGM battery with superior cold-cranking performance.",specs:{Voltage:"12V",Capacity:"75Ah",Type:"AGM",CCA:"750",Warranty:"4 Years"}},
+{id:3,name:"All-Season Tire 225/65R17",category:"tires",brand:"Michelin",price:179.99,rating:4.6,reviews:589,stock:28,image:"🛞",sku:"TR-2265",isNew:true,description:"Premium all-season tire with excellent wet and dry traction.",specs:{Size:"225/65R17",Type:"All-Season","Load Index":"102","Speed":"H",Warranty:"60,000 mi"}},
+{id:4,name:"Performance Oil Filter",category:"engine",brand:"K&N",price:24.99,rating:4.5,reviews:156,stock:120,image:"⚙️",sku:"OF-301",description:"High-flow oil filter designed for performance engines.",specs:{"Filter Media":"Synthetic",Height:"3.75\"",Thread:"3/4-16","Anti-drain":"Yes"}},
+{id:5,name:"LED Headlight Bulbs H11",category:"lights",brand:"Philips",price:79.99,oldPrice:99.99,rating:4.9,reviews:891,stock:67,image:"💡",sku:"LED-H11",sale:true,isNew:true,description:"Ultra-bright LED headlight bulbs with 6000K pure white light.",specs:{Type:"H11",Lumens:"8000lm","Color Temp":"6000K",Lifespan:"50,000 hrs",Wattage:"30W"}},
+{id:6,name:"OBD2 Diagnostic Scanner",category:"electronics",brand:"Autel",price:159.99,rating:4.7,reviews:234,stock:34,image:"📟",sku:"OBD-500",description:"Professional OBD2 scanner with Bluetooth connectivity.",specs:{Connectivity:"Bluetooth 5.0",Compat:"All OBD2",Display:"3.5\" LCD"}},
+{id:7,name:"Socket Wrench Set 108pc",category:"tools",brand:"Craftsman",price:149.99,rating:4.8,reviews:345,stock:19,image:"🔧",sku:"TL-108",description:"Complete 108-piece socket wrench set with carrying case.",specs:{Pieces:"108",Drives:"1/4\", 3/8\", 1/2\"",Material:"Chrome Vanadium",Warranty:"Lifetime"}},
+{id:8,name:"Iridium Spark Plugs (Set of 4)",category:"engine",brand:"NGK",price:39.99,rating:4.6,reviews:678,stock:200,image:"⚡",sku:"SP-404",description:"Iridium spark plugs for longer life and better ignition.",specs:{Material:"Iridium",Gap:"0.044\"",Pack:"4 plugs",Life:"100,000 mi"}},
+{id:9,name:"All-Weather Floor Mats",category:"accessories",brand:"WeatherTech",price:189.99,rating:4.9,reviews:1023,stock:45,image:"🚗",sku:"FM-AW01",isNew:true,description:"Custom-fit all-weather floor mats with raised edges.",specs:{Material:"Thermoplastic",Pieces:"4",Color:"Black",Fit:"Custom"}},
+{id:10,name:"Premium Windshield Wipers 22\"",category:"accessories",brand:"Bosch",price:34.99,rating:4.5,reviews:456,stock:89,image:"🌧️",sku:"WW-22",description:"All-season beam wiper blades with superior visibility.",specs:{Size:"22\"",Type:"Beam",Material:"Natural Rubber"}},
+{id:11,name:"Turbocharger Upgrade Kit",category:"engine",brand:"Garrett",price:1299.99,rating:4.7,reviews:89,stock:5,image:"💨",sku:"TB-G25",description:"High-performance turbocharger for increased HP.",specs:{"Max HP":"450",Boost:"18 PSI",Material:"Forged Steel"}},
+{id:12,name:"Drilled/Slotted Brake Rotors (Pair)",category:"brakes",brand:"Powerstop",price:149.99,rating:4.6,reviews:178,stock:22,image:"🛑",sku:"BR-PAIR",description:"Drilled and slotted brake rotors for performance braking.",specs:{Type:"Drilled/Slotted",Pack:"Pair",Material:"Cast Iron",Position:"Front"}},
+{id:13,name:"Full Synthetic Motor Oil 5W-30",category:"engine",brand:"Mobil 1",price:44.99,rating:4.8,reviews:823,stock:150,image:"🛢️",sku:"OIL-5W30",description:"Full synthetic motor oil for maximum engine protection.",specs:{Viscosity:"5W-30",Volume:"5 Quarts",Type:"Full Synthetic"}},
+{id:14,name:"Cold Air Intake System",category:"engine",brand:"K&N",price:299.99,rating:4.7,reviews:267,stock:15,image:"🌬️",sku:"CAI-K01",description:"Boost horsepower and improve throttle response.",specs:{"HP Gain":"+15 HP",Material:"Aluminum",Filter:"Reusable"}},
+{id:15,name:"Fog Light Kit LED",category:"lights",brand:"Rigid",price:189.99,rating:4.6,reviews:145,stock:40,image:"🔦",sku:"FOG-LED",description:"Ultra-bright LED fog light kit with mounting hardware.",specs:{Lumens:"3600lm",Color:"6000K White",IP:"IP67"}}
+];
+
+const REVIEWS={
+1:[{author:"Mike J.",rating:5,date:"2024-09-15",comment:"Excellent brake pads! Great stopping power and minimal dust."},{author:"Sarah K.",rating:4,date:"2024-08-20",comment:"Good quality, easy to install. Quiet operation."}],
+5:[{author:"Tom R.",rating:5,date:"2024-10-02",comment:"Super bright! Night driving is so much better now."},{author:"Lisa M.",rating:5,date:"2024-09-28",comment:"Perfect fit, installation took 15 minutes."}],
+2:[{author:"Bob W.",rating:5,date:"2024-09-10",comment:"Great battery, instant cold starts in winter."}],
+3:[{author:"Jenny L.",rating:5,date:"2024-10-05",comment:"Amazing traction in rain and snow. Worth the price."}]
+};
+
+const VEHICLES={
+makes:["Honda","Toyota","Ford","Chevrolet","BMW","Mercedes","Audi","Nissan"],
+models:{Honda:["Civic","Accord","CR-V","Pilot"],Toyota:["Camry","Corolla","RAV4","Highlander"],Ford:["F-150","Mustang","Explorer","Escape"],Chevrolet:["Silverado","Equinox","Malibu"],BMW:["3 Series","5 Series","X3","X5"],Mercedes:["C-Class","E-Class","GLC"],Audi:["A4","Q5","A6"],Nissan:["Altima","Sentra","Rogue"]}
+};
+
+const SAMPLE_ORDERS=[
+{id:"ORD-1001",date:"2024-10-15",total:319.98,status:"Delivered",tracking:"1Z999AA10123456784",email:"demo@user.com",items:[{id:1,name:"Premium Ceramic Brake Pads",qty:2,price:89.99},{id:8,name:"Spark Plugs",qty:1,price:39.99}]},
+{id:"ORD-1002",date:"2024-10-28",total:229.99,status:"Shipped",tracking:"1Z999AA10123456785",email:"demo@user.com",items:[{id:2,name:"AGM Car Battery",qty:1,price:229.99}]},
+{id:"ORD-1003",date:"2024-11-05",total:79.99,status:"Processing",tracking:null,email:"demo@user.com",items:[{id:5,name:"LED Headlight Bulbs",qty:1,price:79.99}]}
+];
+
+/* ============ STATE ============ */
+let state={filters:{cat:null,search:null,sale:false},currentProductId:null};
+
+/* ============ CART ============ */
+function getCart(){return JSON.parse(localStorage.getItem('cart')||'[]')}
+function saveCart(c){localStorage.setItem('cart',JSON.stringify(c));updateCartCount()}
+function updateCartCount(){document.getElementById('cartCount').textContent=getCart().reduce((s,i)=>s+i.qty,0)}
+function addToCart(id,qty=1){
+  const cart=getCart();
+  const e=cart.find(i=>i.id===id);
+  if(e)e.qty+=qty;else cart.push({id,qty});
+  saveCart(cart);toast('✓ Added to cart!');
+}
+function updateQty(id,q){
+  q=+q;const cart=getCart();const i=cart.find(x=>x.id===id);
+  if(i){if(q<=0)removeFromCart(id);else{i.qty=q;saveCart(cart);renderCart();}}
+}
+function removeFromCart(id){saveCart(getCart().filter(i=>i.id!==id));renderCart();}
+function toast(m){
+  const t=document.createElement('div');t.className='toast';t.textContent=m;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
+}
+
+/* ============ ROUTING ============ */
+function showPage(page,data){
+  window.scrollTo(0,0);
+  if(page==='home')renderHome();
+  else if(page==='shop')renderShop();
+  else if(page==='product')renderProductDetail(data);
+  else if(page==='cart')renderCart();
+  else if(page==='checkout')renderCheckout();
+  else if(page==='account')renderAccount();
+  else if(page==='admin')renderAdmin();
+  else if(page==='confirmation')renderConfirmation(data);
+}
+
+function performSearch(){
+  const q=document.getElementById('globalSearch').value.trim();
+  if(q){state.filters={cat:null,search:q.toLowerCase(),sale:false};showPage('shop');}
+}
+function filterCategory(c){state.filters={cat:c,search:null,sale:false};showPage('shop');}
+
+/* ============ PRODUCT CARD ============ */
+function productCard(p){
+  const stars='★'.repeat(Math.round(p.rating))+'☆'.repeat(5-Math.round(p.rating));
+  const oldP=p.oldPrice?`<span class="old">$${p.oldPrice}</span>`:'';
+  const badge=p.stock>10?'':p.stock>0?'<span style="color:#f39c12;font-size:12px">⚠ Low Stock</span>':'<span style="color:#e74c3c;font-size:12px">Out of Stock</span>';
+  return `<div class="product-card" onclick="showPage('product',${p.id})">
+    <div class="product-image">${p.image}</div>
+    <div class="product-info">
+      <div class="product-brand">${p.brand}</div>
+      <div class="product-title">${p.name}</div>
+      <div class="product-rating">$${stars} ($${p.reviews||0})</div>
+      <div class="product-price">$$${p.price}$${oldP}</div>
+      ${badge}
+      <button class="btn-primary" onclick="event.stopPropagation();addToCart($${p.id})" $${p.stock===0?'disabled':''}>Add to Cart</button>
+    </div>
+  </div>`;
+}
+
+/* ============ HOME PAGE ============ */
+function renderHome(){
+  state.filters={cat:null,search:null,sale:false};
+  const featured=PRODUCTS.slice(0,4).map(productCard).join('');
+  const newArr=PRODUCTS.filter(p=>p.isNew).map(productCard).join('');
+  const makeOpts=VEHICLES.makes.map(m=>`<option value="$${m}">$${m}</option>`).join('');
+  let years='';for(let y=2024;y>=2000;y--)years+=`<option>${y}</option>`;
+  
+  document.getElementById('mainContent').innerHTML=`
+  <section class="hero">
+    <div class="container">
+      <h1>Premium Parts for Every Ride</h1>
+      <p>Shop 50,000+ certified auto parts. Free shipping over \$99.</p>
+      <div class="vehicle-finder">
+        <h3>🔍 Find Parts for Your Vehicle</h3>
+        <div class="finder-grid">
+          <select id="vehMake" onchange="updateModels()"><option value="">Make</option>${makeOpts}</select>
+          <select id="vehModel"><option value="">Model</option></select>
+          <select id="vehYear"><option value="">Year</option>${years}</select>
+          <button onclick="findVehicle()">Find Parts</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section container">
+    <h2>🔥 Featured Products</h2>
+    <div class="product-grid">${featured}</div>
+  </section>
+  <section class="section container">
+    <h2>Shop by Category</h2>
+    <div class="category-grid">
+      <a class="cat-card" onclick="filterCategory('brakes')">🛑<h3>Brakes</h3></a>
+      <a class="cat-card" onclick="filterCategory('batteries')">🔋<h3>Batteries</h3></a>
+      <a class="cat-card" onclick="filterCategory('tires')">🛞<h3>Tires</h3></a>
+      <a class="cat-card" onclick="filterCategory('engine')">⚙️<h3>Engine</h3></a>
+      <a class="cat-card" onclick="filterCategory('lights')">💡<h3>Lights</h3></a>
+      <a class="cat-card" onclick="filterCategory('electronics')">📟<h3>Electronics</h3></a>
+      <a class="cat-card" onclick="filterCategory('tools')">🔧<h3>Tools</h3></a>
+      <a class="cat-card" onclick="filterCategory('accessories')">✨<h3>Accessories</h3></a>
+    </div>
+  </section>
+  <section class="section container">
+    <h2>✨ New Arrivals</h2>
+    <div class="product-grid">${newArr}</div>
+  </section>
+  <section class="promo-banner">
+    <div class="container">
+      <h2>🎉 Summer Sale - Up to 40% Off!</h2>
+      <p>Limited time offers on brakes, batteries, and more.</p>
+      <button class="btn-primary" onclick="state.filters={cat:null,search:null,sale:true};showPage('shop')">Shop Sale</button>
+    </div>
+  </section>`;
+}
+
+function updateModels(){
+  const make=document.getElementById('vehMake').value;
+  const model=document.getElementById('vehModel');
+  model.innerHTML='<option value="">Model</option>';
+  (VEHICLES.models[make]||[]).forEach(m=>model.innerHTML+=`<option>${m}</option>`);
+}
+function findVehicle(){
+  const make=document.getElementById('vehMake').value;
+  if(!make)return alert('Please select a vehicle make');
+  toast(`Finding parts for ${make}...`);
+  setTimeout(()=>showPage('shop'),500);
+}
+
+/* ============ SHOP PAGE ============ */
+function renderShop(){
+  const cats=[...new Set(PRODUCTS.map(p=>p.category))];
+  const brands=[...new Set(PRODUCTS.map(p=>p.brand))];
+  const title=state.filters.search?`Search: "${state.filters.search}"`:state.filters.cat?state.filters.cat.charAt(0).toUpperCase()+state.filters.cat.slice(1):state.filters.sale?"Sale Items":"All Products";
+  
+  document.getElementById('mainContent').innerHTML=`
+  <div class="container shop-layout">
+    <aside class="sidebar">
+      <h3>Filters</h3>
+      <div class="filter-group">
+        <h4>Category</h4>
+        <div>$${cats.map(c=>`<label><input type="checkbox" class="catCheck" value="$${c}" $${c===state.filters.cat?'checked':''}> $${c.charAt(0).toUpperCase()+c.slice(1)}</label>`).join('')}</div>
+      </div>
+      <div class="filter-group">
+        <h4>Price Range</h4>
+        <label>Min: $<input type="number" id="minPrice" value="0"></label>
+        <label>Max: $<input type="number" id="maxPrice" value="2000"></label>
+      </div>
+      <div class="filter-group">
+        <h4>Brand</h4>
+        <div>$${brands.map(b=>`<label><input type="checkbox" class="brandCheck" value="$${b}"> ${b}</label>`).join('')}</div>
+      </div>
+      <div class="filter-group">
+        <h4>Rating</h4>
+        <select id="ratingFilter"><option value="0">All</option><option value="4">4★ & up</option><option value="3">3★ & up</option></select>
+      </div>
+      <button class="btn-primary" onclick="applyFilters()">Apply Filters</button>
+      <button class="btn-secondary" onclick="clearFilters()">Clear</button>
+    </aside>
+    <main>
+      <div class="shop-header">
+        <h1>${title}</h1>
+        <select id="sortBy" onchange="applyFilters()">
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating">Top Rated</option>
+          <option value="new">Newest</option>
+        </select>
+      </div>
+      <div id="productList" class="product-grid"></div>
+    </main>
+  </div>`;
+  applyFilters();
+}
+
+function applyFilters(){
+  let r=[...PRODUCTS];
+  const sCats=[...document.querySelectorAll('.catCheck:checked')].map(c=>c.value);
+  const sBrands=[...document.querySelectorAll('.brandCheck:checked')].map(c=>c.value);
+  const minP=+document.getElementById('minPrice').value||0;
+  const maxP=+document.getElementById('maxPrice').value||999999;
+  const rat=+document.getElementById('ratingFilter').value;
+  const sort=document.getElementById('sortBy').value;
+  
+  if(sCats.length)r=r.filter(p=>sCats.includes(p.category));
+  if(sBrands.length)r=r.filter(p=>sBrands.includes(p.brand));
+  r=r.filter(p=>p.price>=minP&&p.price<=maxP&&p.rating>=rat);
+  if(state.filters.search)r=r.filter(p=>(p.name+p.brand+p.sku+p.description).toLowerCase().includes(state.filters.search));
+  if(state.filters.sale)r=r.filter(p=>p.sale);
+  
+  if(sort==='price-asc')r.sort((a,b)=>a.price-b.price);
+  else if(sort==='price-desc')r.sort((a,b)=>b.price-a.price);
+  else if(sort==='rating')r.sort((a,b)=>b.rating-a.rating);
+  else if(sort==='new')r.sort((a,b)=>(b.isNew?1:0)-(a.isNew?1:0));
+  
+  document.getElementById('productList').innerHTML=r.length?r.map(productCard).join(''):'<p style="padding:40px;text-align:center">No products found.</p>';
+}
+function clearFilters(){
+  state.filters={cat:null,search:null,sale:false};
+  document.querySelectorAll('.catCheck,.brandCheck').forEach(c=>c.checked=false);
+  document.getElementById('minPrice').value=0;
+  document.getElementById('maxPrice').value=2000;
+  document.getElementById('ratingFilter').value=0;
+  applyFilters();
+}
+
+/* ============ PRODUCT DETAIL ============ */
+function renderProductDetail(id){
+  const p=PRODUCTS.find(x=>x.id===id);
+  if(!p){document.getElementById('mainContent').innerHTML='<div class="container"><p>Product not found.</p></div>';return;}
+  const stars='★'.repeat(Math.round(p.rating))+'☆'.repeat(5-Math.round(p.rating));
+  const avail=p.stock>10?`<span class="availability in-stock">✓ In Stock ($${p.stock} available)</span>`:p.stock>0?`<span class="availability low-stock">⚠ Low Stock - Only $${p.stock} left</span>`:`<span class="availability out-stock">✗ Out of Stock</span>`;
+  const oldP=p.oldPrice?`<span style="text-decoration:line-through;color:#999;font-size:20px;margin-left:10px">$${p.oldPrice}</span>`:'';
+  const reviews=REVIEWS[p.id]||[];
+  const related=PRODUCTS.filter(x=>x.category===p.category&&x.id!==p.id).slice(0,4);
+  
+  document.getElementById('mainContent').innerHTML=`
+  <div class="container">
+    <nav class="breadcrumb">
+      <a onclick="showPage('home')">Home</a> / <a onclick="filterCategory('${p.
